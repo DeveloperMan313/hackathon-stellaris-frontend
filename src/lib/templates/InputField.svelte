@@ -12,7 +12,8 @@
     placeholder,
     disabled,
     noSpaces,
-    class: className
+    class: className,
+    id
   }: InputFieldProps = $props();
 
   let errorMsg = $state('');
@@ -32,10 +33,9 @@
 
 <div class={'flex w-full max-w-sm flex-col gap-1.5' + (className ? ' ' + className : '')}>
   {#if label}
-    <Label for="input-{label}">{label}</Label>
+    <Label for={id || `input-${label}`}>{label}</Label>
   {/if}
   <Input
-    id="input-{label}"
     {type}
     bind:value
     {placeholder}

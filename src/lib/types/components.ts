@@ -3,7 +3,7 @@
  */
 
 export interface InputFieldProps {
-  type: 'text' | 'email' | 'password';
+  type: "text" | "email" | "password";
   getError?: (value: string) => string | null;
   value: string; // bindable
   isValid?: boolean; // bindable
@@ -13,4 +13,12 @@ export interface InputFieldProps {
   noSpaces?: boolean;
   class?: string;
   id?: string;
+}
+
+export interface ObservationProps {
+  id: string;
+  declination: string;
+  rightAscension: string;
+  photo?: File | null;
+  photoPreview?: string;
 }
