@@ -19,6 +19,7 @@ export interface ObservationProps {
   id: string;
   declination: string;
   rightAscension: string;
+  time: Date;
   photo?: File | null;
   photoPreview?: string;
 }

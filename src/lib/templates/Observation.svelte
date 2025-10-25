@@ -10,8 +10,11 @@
     id,
     declination = $bindable(),
     rightAscension = $bindable(),
+    time = $bindable(),
     photoPreview = $bindable(),
   }: ObservationProps = $props();
+
+  let timeStr = $state("");
 
   const { removeObservation, handlePhotoUpload, removePhoto } = getContext(
     "observations",
@@ -25,7 +28,7 @@
 <Card class="border-dashed">
   <CardContent class="p-4">
     <div class="flex items-start justify-between">
-      <h4 class="font-medium">Наблюдение // id</h4>
+      <h4 class="font-medium">Наблюдение</h4>
       <Button
         type="button"
         variant="ghost"
@@ -44,7 +47,7 @@
             type="text"
             bind:value={declination}
             label="Склонение"
-            placeholder="Например: +45°30'15&quot;"
+            placeholder="+45°30'15&quot;"
             noSpaces={false}
             id={"declination-" + id}
           />
@@ -54,9 +57,19 @@
             type="text"
             bind:value={rightAscension}
             label="Прямое восхождение"
-            placeholder="Например: 14h30m45s"
+            placeholder="+45°30'15&quot;"
             noSpaces={false}
             id={"right-ascension-" + id}
+          />
+        </div>
+        <div class="space-y-2">
+          <InputField
+            type="text"
+            bind:value={timeStr}
+            label="Время наблюдения"
+            placeholder="14:32:12"
+            noSpaces={false}
+            id={"time-" + id}
           />
         </div>
       </div>
