@@ -12,4 +12,5 @@ export interface InputFieldProps {
   disabled?: boolean;
   noSpaces?: boolean;
   class?: string;
+  id?: string;
 }
