@@ -11,6 +11,7 @@
     declination = $bindable(),
     rightAscension = $bindable(),
     time = $bindable(),
+    editable,
     photoPreview = $bindable(),
   }: ObservationProps = $props();
 
@@ -29,15 +30,17 @@
   <CardContent class="p-4">
     <div class="flex items-start justify-between">
       <h4 class="font-medium">Наблюдение</h4>
-      <Button
-        type="button"
-        variant="ghost"
-        size="sm"
-        onclick={() => removeObservation(id)}
-        class="h-8 w-8 p-0"
-      >
-        <X size={16} />
-      </Button>
+      {#if editable}
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onclick={() => removeObservation(id)}
+          class="h-8 w-8 p-0"
+        >
+          <X size={16} />
+        </Button>
+      {/if}
     </div>
 
     <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -50,6 +53,7 @@
             placeholder="+45°30'15&quot;"
             noSpaces={false}
             id={"declination-" + id}
+            disabled={!editable}
           />
         </div>
         <div class="space-y-2">
@@ -60,6 +64,7 @@
             placeholder="+45°30'15&quot;"
             noSpaces={false}
             id={"right-ascension-" + id}
+            disabled={!editable}
           />
         </div>
         <div class="space-y-2">
@@ -70,6 +75,7 @@
             placeholder="14:32:12"
             noSpaces={false}
             id={"time-" + id}
+            disabled={!editable}
           />
         </div>
       </div>
@@ -84,17 +90,19 @@
               alt="Предпросмотр фотографии"
               class="h-32 w-full rounded-md object-cover border"
             />
-            <Button
-              type="button"
-              variant="destructive"
-              size="sm"
-              onclick={() => removePhoto(id)}
-              class="absolute -top-2 -right-2 h-6 w-6 p-0"
-            >
-              <X size={12} />
-            </Button>
+            {#if editable}
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                onclick={() => removePhoto(id)}
+                class="absolute -top-2 -right-2 h-6 w-6 p-0"
+              >
+                <X size={12} />
+              </Button>
+            {/if}
           </div>
-        {:else}
+        {:else if editable}
           <label
             class="flex aspect-video w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed border-muted-foreground/25 transition-colors hover:bg-muted/50"
           >
@@ -114,6 +122,14 @@
               id={"photo-" + id}
             />
           </label>
+        {:else}
+          <div
+            class="flex aspect-video w-full flex-col items-center justify-center rounded-md border-2 border-dashed border-muted-foreground/25 p-4 text-center"
+          >
+            <span class="text-sm text-muted-foreground"
+              >Фотография отсутствует</span
+            >
+          </div>
         {/if}
       </div>
     </div>

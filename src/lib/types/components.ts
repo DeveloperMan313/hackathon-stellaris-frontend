@@ -20,6 +20,7 @@ export interface ObservationProps {
   declination: string;
   rightAscension: string;
   time: Date;
+  editable: boolean;
   photo?: File | null;
   photoPreview?: string;
 }

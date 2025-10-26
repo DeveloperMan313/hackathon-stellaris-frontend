@@ -70,6 +70,7 @@
         declination: "",
         rightAscension: "",
         time: new Date(),
+        editable: true,
         photo: null,
         photoPreview: "",
       },
@@ -150,6 +151,7 @@
             bind:declination={observation.declination}
             bind:rightAscension={observation.rightAscension}
             bind:time={observation.time}
+            editable={observation.editable}
             bind:photoPreview={observation.photoPreview}
           />
         {:else}
