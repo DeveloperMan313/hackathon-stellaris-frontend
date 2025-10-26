@@ -1,10 +1,14 @@
 import { PUBLIC_API_ORIGIN } from '$env/static/public';
 
+function getAuthToken(): string | null {
+  return localStorage.getItem('access_token');
+}
+
 /**
  * Base API client that sends JSON, cookies and works with CORS
  */
 export const ApiClient = {
-  async fetch(inputRelative: string, init?: RequestInit): Promise<Response> {
+  async fetch(inputRelative: string, init?: RequestInit, credentials: boolean = false): Promise<Response> {
     if (!init) {
       init = {};
     }
@@ -14,6 +18,13 @@ export const ApiClient = {
       init.headers = {
         'Content-Type': 'application/json'
       };
+    }
+
+    if (credentials) {
+      const token = getAuthToken();
+      if (token) {
+        (init.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
+      }
     }
 
     const response = await fetch(PUBLIC_API_ORIGIN + inputRelative, init);
@@ -26,8 +37,8 @@ export const ApiClient = {
     return response;
   },
 
-  async fetchJSON(inputRelative: string, init?: RequestInit) {
-    const response = await ApiClient.fetch(inputRelative, init);
+  async fetchJSON(inputRelative: string, init?: RequestInit, credentials: boolean = false) {
+    const response = await ApiClient.fetch(inputRelative, init, credentials);
     const json = await response.json();
     if (!response.ok) {
       throw Error(json.error);

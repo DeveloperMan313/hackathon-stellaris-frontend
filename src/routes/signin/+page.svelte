@@ -5,6 +5,7 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
+  import type { LoginResponse } from "$lib/types";
 
   let usernameValue = $state("");
   let usernameIsValid = $state(false);

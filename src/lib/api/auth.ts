@@ -1,5 +1,5 @@
 import { ApiClient } from "./client";
-import type { RegisterRequest, LoginRequest } from "$lib/types";
+import type { RegisterRequest, LoginRequest, LoginResponse } from "$lib/types";
 
 export const AuthApi = {
   /**
@@ -7,10 +7,14 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async getAuth(): Promise<object> {
-    return ApiClient.fetchJSON("/users", {
-      method: "GET",
-      headers: {},
-    });
+    return ApiClient.fetchJSON(
+      "/users",
+      {
+        method: "GET",
+        headers: {},
+      },
+      true,
+    );
   },
 
   /**
@@ -28,13 +32,20 @@ export const AuthApi = {
   /**
    * Log in to user account
    * @param {LoginRequest} request - request object
-   * @returns {Promise<object>} - API response
+   * @returns {Promise<LoginResponse>} - API response with tokens
    */
-  async logIn(request: LoginRequest): Promise<object> {
-    return ApiClient.fetchJSON("/users/login", {
+  async logIn(request: LoginRequest): Promise<LoginResponse> {
+    const response = await ApiClient.fetchJSON("/users/login", {
       method: "POST",
       body: JSON.stringify(request),
     });
+
+    if (response.access_token && response.refresh_token) {
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+    }
+
+    return response;
   },
 
   /**
@@ -42,9 +53,17 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async logOut(): Promise<object> {
-    return ApiClient.fetchJSON("/users/logout", {
-      method: "POST",
-      headers: {},
-    });
+    // Clear tokens from localStorage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    return ApiClient.fetchJSON(
+      "/users/logout",
+      {
+        method: "POST",
+        headers: {},
+      },
+      true,
+    );
   },
 };
