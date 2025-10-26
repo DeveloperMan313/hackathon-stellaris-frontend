@@ -16,7 +16,7 @@ export interface InputFieldProps {
 }
 
 export interface ObservationProps {
-  id: string;
+  id: number;
   declination: string;
   rightAscension: string;
   time: Date;

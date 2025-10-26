@@ -19,9 +19,9 @@
   const { removeObservation, handlePhotoUpload, removePhoto } = getContext(
     "observations",
   ) as {
-    removeObservation: (id: string) => void;
-    handlePhotoUpload: (event: Event, observationId: string) => void;
-    removePhoto: (observationId: string) => void;
+    removeObservation: (id: number) => void;
+    handlePhotoUpload: (event: Event, observationId: number) => void;
+    removePhoto: (observationId: number) => void;
   };
 </script>
 

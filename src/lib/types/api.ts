@@ -23,6 +23,18 @@ export interface LoginResponse {
   };
 }
 
+export interface ObservationData {
+  declination: number;
+  rightAscension: number;
+  timestamp: number;
+  photo: string;
+}
+
+export interface CreateCometRequest {
+  name: string;
+  observations: Array<ObservationData>;
+}
+
 export interface AddObservationRequest {
   // TODO add file
   comet_id: number;

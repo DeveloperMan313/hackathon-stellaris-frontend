@@ -9,19 +9,26 @@
   } from "$lib/components/ui/card/index.js";
   import { Plus, Upload } from "@lucide/svelte";
   import { setContext } from "svelte";
-  import type { ObservationProps } from "$lib/types";
+  import type {
+    CreateCometRequest,
+    ObservationData,
+    ObservationProps,
+  } from "$lib/types";
   import Observation from "$lib/templates/Observation.svelte";
   import Navbar from "$lib/templates/Navbar.svelte";
+  import { CometApi } from "$lib/api/comet";
 
   let cometName = $state("");
   let observations = $state<ObservationProps[]>([]);
 
+  let observationId = 0;
+
   setContext("observations", {
-    removeObservation: (id: string) => {
+    removeObservation: (id: number) => {
       observations = observations.filter((obs) => obs.id !== id);
     },
 
-    handlePhotoUpload: (event: Event, observationId: string) => {
+    handlePhotoUpload: (event: Event, observationId: number) => {
       const target = event.target as HTMLInputElement;
       const file = target.files?.[0];
       if (file) {
@@ -42,7 +49,7 @@
       }
     },
 
-    removePhoto: (observationId: string) => {
+    removePhoto: (observationId: number) => {
       const observationsCopy = [...observations];
       const observationIndex = observationsCopy.findIndex(
         (obs) => obs.id === observationId,
@@ -59,27 +66,50 @@
     observations = [
       ...observations,
       {
-        id: crypto.randomUUID(),
+        id: observationId++,
         declination: "",
         rightAscension: "",
+        time: new Date(),
         photo: null,
         photoPreview: "",
       },
     ];
   };
 
-  const createComet = () => {
-    console.log("Creating comet:", {
+  const createComet = async () => {
+    const observationsData = await Promise.all(
+      observations.map(
+        async (obs) =>
+          ({
+            declination: Number(obs.declination),
+            rightAscension: Number(obs.rightAscension),
+            timestamp: Math.floor(obs.time.getTime() / 1000),
+            photo: obs.photo ? await convertFileToBase64(obs.photo) : "",
+          }) as ObservationData,
+      ),
+    );
+
+    CometApi.create({
       name: cometName,
-      observations: observations.map((obs) => ({
-        declination: obs.declination,
-        rightAscension: obs.rightAscension,
-        photo: obs.photo,
-      })),
-    });
+      observations: observationsData,
+    } as CreateCometRequest);
 
     cometName = "";
     observations = [];
+  };
+
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        // Remove the data:image/...;base64, prefix
+        const base64Data = base64.split(",")[1];
+        resolve(base64Data);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 </script>
 
@@ -119,6 +149,7 @@
             id={observation.id}
             bind:declination={observation.declination}
             bind:rightAscension={observation.rightAscension}
+            bind:time={observation.time}
             bind:photoPreview={observation.photoPreview}
           />
         {:else}
