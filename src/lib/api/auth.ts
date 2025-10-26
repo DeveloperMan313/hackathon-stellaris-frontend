@@ -1,5 +1,5 @@
-import { ApiClient } from './client';
-import type { RegisterRequest, LoginRequest } from '$lib/types';
+import { ApiClient } from "./client";
+import type { RegisterRequest, LoginRequest } from "$lib/types";
 
 export const AuthApi = {
   /**
@@ -7,9 +7,9 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async getAuth(): Promise<object> {
-    return ApiClient.fetchJSON('/auth/user', {
-      method: 'GET',
-      headers: {}
+    return ApiClient.fetchJSON("/users", {
+      method: "GET",
+      headers: {},
     });
   },
 
@@ -19,9 +19,9 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async register(request: RegisterRequest): Promise<object> {
-    return ApiClient.fetchJSON('/auth/user/register', {
-      method: 'POST',
-      body: JSON.stringify(request)
+    return ApiClient.fetchJSON("/users/register", {
+      method: "POST",
+      body: JSON.stringify(request),
     });
   },
 
@@ -31,9 +31,9 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async logIn(request: LoginRequest): Promise<object> {
-    return ApiClient.fetchJSON('/auth/user/login', {
-      method: 'POST',
-      body: JSON.stringify(request)
+    return ApiClient.fetchJSON("/users/login", {
+      method: "POST",
+      body: JSON.stringify(request),
     });
   },
 
@@ -42,9 +42,9 @@ export const AuthApi = {
    * @returns {Promise<object>} - API response
    */
   async logOut(): Promise<object> {
-    return ApiClient.fetchJSON('/auth/user/logout', {
-      method: 'POST',
-      headers: {}
+    return ApiClient.fetchJSON("/users/logout", {
+      method: "POST",
+      headers: {},
     });
-  }
+  },
 };
