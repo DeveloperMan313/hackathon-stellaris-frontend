@@ -104,9 +104,7 @@
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result as string;
-        // Remove the data:image/...;base64, prefix
-        const base64Data = base64.split(",")[1];
-        resolve(base64Data);
+        resolve(base64);
       };
       reader.onerror = reject;
       reader.readAsDataURL(file);

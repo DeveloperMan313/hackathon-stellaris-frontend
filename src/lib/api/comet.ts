@@ -1,4 +1,9 @@
-import type { CometsResponse, CreateCometRequest } from "$lib/types";
+import type {
+  CometsResponse,
+  CreateCometRequest,
+  GetCometRequest,
+  GetCometResponse,
+} from "$lib/types";
 import { ApiClient } from "./client";
 
 export const CometApi = {
@@ -25,6 +30,22 @@ export const CometApi = {
   async getAll(): Promise<CometsResponse> {
     return ApiClient.fetchJSON(
       "/comets",
+      {
+        method: "GET",
+        headers: {},
+      },
+      true,
+    );
+  },
+
+  /**
+   * Get comet by id
+   * @param {GetCometRequest} request - request object
+   * @returns {Promise<GetCometResponse>} - API response
+   */
+  async getComet(request: GetCometRequest): Promise<GetCometResponse> {
+    return ApiClient.fetchJSON(
+      `/comets/${request.id}`,
       {
         method: "GET",
         headers: {},

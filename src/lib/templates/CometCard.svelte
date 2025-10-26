@@ -10,8 +10,8 @@
   <Card class="w-full pt-0 pb-2 pr-0 gap-2 cursor-pointer">
     {#if observations.length > 0 && observations[0].photo}
       <img
-        class="size-48 bg-purple-500 object-cover"
-        src={`data:image/jpeg;base64,${observations[0].photo}`}
+        class="w-full aspect-square bg-purple-500 object-cover"
+        src={observations[0].photo}
         alt={name}
       />
     {:else}

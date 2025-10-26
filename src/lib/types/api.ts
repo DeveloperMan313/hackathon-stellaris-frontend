@@ -45,6 +45,12 @@ export interface CreateCometRequest {
   observations: Array<ObservationData>;
 }
 
+export interface GetCometRequest {
+  id: number;
+}
+
+export type GetCometResponse = CometData;
+
 export interface AddObservationRequest {
   // TODO add file
   comet_id: number;
