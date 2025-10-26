@@ -36,9 +36,7 @@ export interface CometData {
   observations: Array<ObservationData>;
 }
 
-export interface CometsResponse {
-  comets: Array<CometData>;
-}
+export type CometsResponse = Array<CometData>;
 
 export interface CreateCometRequest {
   name: string;

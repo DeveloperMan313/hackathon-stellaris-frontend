@@ -12,7 +12,7 @@
   onMount(async () => {
     try {
       const response = await CometApi.getAll();
-      comets = response.comets || [];
+      comets = response || [];
     } catch (error) {
       console.error("Failed to fetch comets:", error);
     }

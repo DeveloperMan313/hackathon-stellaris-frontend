@@ -78,15 +78,15 @@
 </script>
 
 <Navbar />
-<div class="min-h-screen bg-background flex justify-center items-center">
+<div class="w-full mt-40 px-5 flex flex-col items-center">
   <Card class="w-2xl">
     <CardHeader>
       <CardTitle class="text-2xl font-bold">Комета: {cometName}</CardTitle>
     </CardHeader>
     <CardContent class="space-y-6">
       <div class="space-y-2">
-        <div class="text-sm font-medium leading-none">Название кометы</div>
-        <div class="text-lg font-semibold">{cometName}</div>
+        <h3 class="text-lg font-semibold">Информация о комете</h3>
+        <p>TODO</p>
       </div>
       <div class="space-y-4">
         <div class="flex items-center justify-between">

@@ -113,7 +113,7 @@
 </script>
 
 <Navbar />
-<div class="min-h-screen bg-background flex justify-center items-center">
+<div class="w-full mt-40 px-5 flex flex-col items-center gap-10">
   <Card class="w-2xl">
     <CardHeader>
       <CardTitle class="text-2xl font-bold">Создание кометы</CardTitle>
