@@ -2,6 +2,8 @@
  * Component properties interfaces
  */
 
+import type { CometData } from "./api";
+
 export interface InputFieldProps {
   type: "text" | "email" | "password";
   getError?: (value: string) => string | null;
@@ -24,3 +26,5 @@ export interface ObservationProps {
   photo?: File | null;
   photoPreview?: string;
 }
+
+export type CometProps = CometData;

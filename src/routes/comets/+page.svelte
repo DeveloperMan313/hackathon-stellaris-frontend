@@ -3,6 +3,20 @@
   import Input from "$lib/components/ui/input/input.svelte";
   import CometCard from "$lib/templates/CometCard.svelte";
   import Navbar from "$lib/templates/Navbar.svelte";
+  import { CometApi } from "$lib/api/comet";
+  import { onMount } from "svelte";
+  import type { CometProps } from "$lib/types";
+
+  let comets: Array<CometProps> = $state([]);
+
+  onMount(async () => {
+    try {
+      const response = await CometApi.getAll();
+      comets = response.comets || [];
+    } catch (error) {
+      console.error("Failed to fetch comets:", error);
+    }
+  });
 </script>
 
 <Navbar />
@@ -16,8 +30,8 @@
     <Button class="h-full cursor-pointer">Найти</Button>
   </div>
   <div class="w-full grid grid-cols-6 gap-6">
-    {#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as i (i)}
-      <CometCard />
+    {#each comets as comet (comet.id)}
+      <CometCard {...comet} />
     {/each}
   </div>
 </div>

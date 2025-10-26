@@ -1,4 +1,4 @@
-import type { CreateCometRequest } from "$lib/types";
+import type { CometsResponse, CreateCometRequest } from "$lib/types";
 import { ApiClient } from "./client";
 
 export const CometApi = {
@@ -13,6 +13,21 @@ export const CometApi = {
       {
         method: "POST",
         body: JSON.stringify(request),
+      },
+      true,
+    );
+  },
+
+  /**
+   * Get all comets
+   * @returns {Promise<CometsResponse>} - API response
+   */
+  async getAll(): Promise<CometsResponse> {
+    return ApiClient.fetchJSON(
+      "/comets",
+      {
+        method: "GET",
+        headers: {},
       },
       true,
     );

@@ -30,6 +30,16 @@ export interface ObservationData {
   photo: string;
 }
 
+export interface CometData {
+  id: number;
+  name: string;
+  observations: Array<ObservationData>;
+}
+
+export interface CometsResponse {
+  comets: Array<CometData>;
+}
+
 export interface CreateCometRequest {
   name: string;
   observations: Array<ObservationData>;
