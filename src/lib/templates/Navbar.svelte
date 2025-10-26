@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { resolve } from "$app/paths";
   import { Button } from "$lib/components/ui/button/index.js";
 </script>
 
@@ -11,6 +12,6 @@
         Stellaris
       </h1>
     </div>
-    <Button variant="outline" size="sm">Войти</Button>
+    <Button variant="outline" size="sm" href={resolve("/signin")}>Войти</Button>
   </div>
 </nav>

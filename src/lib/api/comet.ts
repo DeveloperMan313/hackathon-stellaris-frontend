@@ -8,9 +8,13 @@ export const CometApi = {
    * @returns {Promise<object>} - API response
    */
   async create(request: CreateCometRequest): Promise<object> {
-    return ApiClient.fetchJSON("/comets", {
-      method: "POST",
-      body: JSON.stringify(request),
-    });
+    return ApiClient.fetchJSON(
+      "/comets",
+      {
+        method: "POST",
+        body: JSON.stringify(request),
+      },
+      true,
+    );
   },
 };
