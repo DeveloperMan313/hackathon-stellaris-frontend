@@ -1,29 +1,27 @@
 <script lang="ts">
-  import InputField from '$lib/templates/InputField.svelte';
+  import InputField from "$lib/templates/InputField.svelte";
   import {
     usernameGetError,
-    emailGetError,
     signupPasswordGetError,
-    getPasswordRepeatGetError
-  } from '$lib/validation';
-  import { AuthApi } from '$lib/api';
-  import { Button } from '$lib/components/ui/button/index.js';
-  import { goto } from '$app/navigation';
-  import { resolve } from '$app/paths';
+    getPasswordRepeatGetError,
+  } from "$lib/validation";
+  import { AuthApi } from "$lib/api";
+  import { Button } from "$lib/components/ui/button/index.js";
+  import { goto } from "$app/navigation";
+  import { resolve } from "$app/paths";
 
-  let usernameValue = $state('');
+  let usernameValue = $state("");
   let usernameIsValid = $state(false);
 
-  let emailValue = $state('');
-  let emailIsValid = $state(false);
-
-  let passwordValue = $state('');
+  let passwordValue = $state("");
   let passwordIsValid = $state(false);
 
-  let passwordRepeatedValue = $state('');
+  let passwordRepeatedValue = $state("");
   let passwordRepeatedIsValid = $state(false);
 
-  const passwordRepeatedGetError = $derived(getPasswordRepeatGetError(passwordValue));
+  const passwordRepeatedGetError = $derived(
+    getPasswordRepeatGetError(passwordValue),
+  );
 
   let registrationStage = $state(0);
 
@@ -35,13 +33,12 @@
     try {
       await AuthApi.register({
         username: usernameValue,
-        email: emailValue,
-        password: passwordValue
+        password: passwordValue,
       });
 
-      goto(resolve('/'));
+      goto(resolve("/"));
     } catch (error) {
-      alert(error instanceof Error ? error.message : 'Registration failed');
+      alert(error instanceof Error ? error.message : "Registration failed");
     }
   };
 </script>
@@ -61,20 +58,11 @@
         placeholder="user123"
         noSpaces={true}
       />
-      <Button class="cursor-pointer" onclick={advanceStage} disabled={!usernameIsValid}>Далее</Button
+      <Button
+        class="cursor-pointer"
+        onclick={advanceStage}
+        disabled={!usernameIsValid}>Далее</Button
       >
-    </div>
-    <div class="flex w-full shrink-0 flex-col gap-4 p-6">
-      <InputField
-        type="email"
-        getError={emailGetError}
-        bind:value={emailValue}
-        bind:isValid={emailIsValid}
-        label="Email"
-        placeholder="email@example.com"
-        noSpaces={true}
-      />
-      <Button class="cursor-pointer" onclick={advanceStage} disabled={!emailIsValid}>Далее</Button>
     </div>
     <div class="flex w-full shrink-0 flex-col gap-4 p-6">
       <InputField
@@ -86,7 +74,10 @@
         placeholder="Введите пароль"
         noSpaces={true}
       />
-      <Button class="cursor-pointer" onclick={advanceStage} disabled={!passwordIsValid}>Далее</Button
+      <Button
+        class="cursor-pointer"
+        onclick={advanceStage}
+        disabled={!passwordIsValid}>Далее</Button
       >
     </div>
     <div class="flex w-full shrink-0 flex-col gap-4 p-6">
@@ -99,8 +90,10 @@
         placeholder="Введите пароль"
         noSpaces={true}
       />
-      <Button class="cursor-pointer" onclick={makeRequest} disabled={!passwordRepeatedIsValid}
-        >Зарегистрироваться</Button
+      <Button
+        class="cursor-pointer"
+        onclick={makeRequest}
+        disabled={!passwordRepeatedIsValid}>Зарегистрироваться</Button
       >
     </div>
   </div>

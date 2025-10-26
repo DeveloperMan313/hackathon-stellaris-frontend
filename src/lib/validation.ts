@@ -12,20 +12,6 @@ export function usernameGetError(value: string): string | null {
   return `At least ${minLength} symbols`;
 }
 
-/**
- * Check email
- * @param {string} value - email string
- * @returns {string?} - error message or null
- */
-export function emailGetError(value: string): string | null {
-  const emailRegexp = /^[^@]+@[^@]+\.[^@]+$/;
-  const isValid = emailRegexp.test(value);
-  if (isValid) {
-    return null;
-  }
-  return "Invalid email";
-}
-
 const passMinLength = 8;
 
 /**
